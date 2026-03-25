@@ -1,0 +1,90 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter(p => p.id.startsWith('en/'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<Base title="Home" lang="en">
+  <section class="hero">
+    <div class="container">
+      <p class="hero-eyebrow">Software with roots</p>
+      <h1 class="hero-title">Open source tools built with purpose</h1>
+      <p class="hero-sub">
+        Calmécac is an independent software label. We build tools for writers and developers — free, open source, and without losing character.
+      </p>
+      <div class="hero-actions">
+        <a href="/en/projects" class="btn btn-primary">See projects</a>
+        <a href="/en/blog" class="btn btn-outline">Read the blog</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="recent-posts">
+    <div class="container">
+      <h2 class="section-title">Latest posts</h2>
+      {posts.length > 0
+        ? posts.map(post => (
+            <PostCard
+              title={post.data.title}
+              description={post.data.description}
+              date={post.data.date}
+              slug={post.id.replace('en/', '').replace('.md', '')}
+              tags={post.data.tags}
+              readingTime={post.data.readingTime}
+              lang="en"
+            />
+          ))
+        : <p style="color: var(--text-muted); padding: 2rem 0;">No posts yet. Check back soon.</p>
+      }
+      <a href="/en/blog" class="all-posts-link">See all posts →</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: 5rem 0 4rem; }
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+  }
+  .hero-title { max-width: 18ch; margin-bottom: 1.25rem; }
+  .hero-sub {
+    max-width: 52ch;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+  .btn-primary { background: var(--teal); color: var(--crema); border: 1.5px solid var(--teal); }
+  .btn-primary:hover { background: var(--teal-dim); border-color: var(--teal-dim); color: var(--crema); }
+  .btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--text-border); }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+  .recent-posts { padding-bottom: 4rem; }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-body);
+  }
+  .all-posts-link { display: inline-block; margin-top: 1.5rem; font-size: 0.9rem; font-weight: 500; color: var(--teal); }
+</style>

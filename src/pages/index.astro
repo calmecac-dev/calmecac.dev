@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter(p => !p.id.startsWith('en/'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<Base title="Inicio" lang="es">
+  <section class="hero">
+    <div class="container">
+      <p class="hero-eyebrow">Software con raíces</p>
+      <h1 class="hero-title">Herramientas open source construidas con propósito</h1>
+      <p class="hero-sub">
+        Calmécac es un sello de software independiente. Hacemos herramientas para escritores y desarrolladores, sin ánimo de lucro y sin perder el carácter.
+      </p>
+      <div class="hero-actions">
+        <a href="/projects" class="btn btn-primary">Ver proyectos</a>
+        <a href="/blog" class="btn btn-outline">Leer el blog</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="recent-posts">
+    <div class="container">
+      <h2 class="section-title">Últimas entradas</h2>
+      {posts.map(post => (
+        <PostCard
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          slug={post.id.replace(".md", "")}
+          tags={post.data.tags}
+          readingTime={post.data.readingTime}
+          lang="es"
+        />
+      ))}
+      <a href="/blog" class="all-posts-link">Ver todas las entradas →</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding: 5rem 0 4rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    max-width: 18ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-sub {
+    max-width: 52ch;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+
+  .btn-primary {
+    background: var(--teal);
+    color: var(--crema);
+    border: 1.5px solid var(--teal);
+  }
+
+  .btn-primary:hover {
+    background: var(--teal-dim);
+    border-color: var(--teal-dim);
+    color: var(--crema);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1.5px solid var(--text-border);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+
+  .recent-posts {
+    padding-bottom: 4rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-body);
+    letter-spacing: 0.02em;
+  }
+
+  .all-posts-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--teal);
+  }
+</style>

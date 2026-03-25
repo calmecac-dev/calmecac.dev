@@ -1,0 +1,185 @@
+---
+import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle.svelte';
+import LangToggle from '../components/LangToggle.svelte';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+}
+
+const {
+  title,
+  description = 'Open source tools built with purpose and cultural roots.',
+  lang = 'es',
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const isEn = currentPath.startsWith('/en');
+
+const nav = isEn
+  ? [
+      { href: '/en/',         label: 'Home'     },
+      { href: '/en/blog',     label: 'Blog'     },
+      { href: '/en/projects', label: 'Projects' },
+      { href: '/en/contact',  label: 'Contact'  },
+    ]
+  : [
+      { href: '/',            label: 'Inicio'    },
+      { href: '/blog',        label: 'Blog'      },
+      { href: '/projects',    label: 'Proyectos' },
+      { href: '/contact',     label: 'Contacto'  },
+    ];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title} · Calmécac</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem('theme');
+        const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', stored || preferred);
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container container--wide header-inner">
+        <a href={isEn ? '/en/' : '/'} class="logo" aria-label="Calmécac — Inicio">
+          <img src="/logo.svg" alt="Calmécac" width="32" height="32" />
+          <span class="logo-text">Calmécac<span class="logo-tld">.dev</span></span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navegación principal">
+          {nav.map(({ href, label }) => (
+            <a href={href} class={`nav-link ${currentPath === href ? 'active' : ''}`}>
+              {label}
+            </a>
+          ))}
+        </nav>
+
+        <div class="header-actions">
+          <LangToggle client:load currentPath={currentPath} isEn={isEn} />
+          <ThemeToggle client:load />
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container container--wide footer-inner">
+        <p class="footer-copy">
+          © {new Date().getFullYear()} Calmécac —
+          <a href="https://github.com/calmecac-dev" target="_blank" rel="noopener">GitHub</a>
+        </p>
+        <p class="footer-tagline">Open source tools built with purpose and cultural roots.</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--text-border);
+    transition: background 0.2s ease;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 64px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .logo:hover { color: var(--teal); }
+
+  .logo-tld {
+    color: var(--teal);
+    font-weight: 400;
+  }
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-sm);
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--text);
+    background: var(--bg-card);
+  }
+
+  .nav-link.active { font-weight: 500; }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+
+  .site-footer {
+    margin-top: 6rem;
+    border-top: 0.5px solid var(--text-border);
+    padding: 2rem 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .footer-copy {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .footer-tagline {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  @media (max-width: 640px) {
+    .main-nav { display: none; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>

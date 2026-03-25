@@ -1,0 +1,102 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter(p => !p.id.startsWith('en/'))
+    .map(post => ({
+      params: { slug: post.id.replace('.md', '') },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formattedDate = post.data.date.toLocaleDateString('es-MX', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+---
+
+<Base title={post.data.title} description={post.data.description} lang="es">
+  <article class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
+        {post.data.readingTime && <span>· {post.data.readingTime} min de lectura</span>}
+      </div>
+      <h1>{post.data.title}</h1>
+      {post.data.description && <p class="post-description">{post.data.description}</p>}
+      {post.data.tags && (
+        <div class="post-tags">
+          {post.data.tags.map((tag: string) => <span class="tag">{tag}</span>)}
+        </div>
+      )}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <footer class="post-footer">
+      <a href="/blog" class="back-link">← Volver al blog</a>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .post-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 0.5px solid var(--text-border);
+  }
+
+  .post-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .post-header h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  .post-description {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--teal);
+    background: color-mix(in srgb, var(--teal) 10%, transparent);
+    border-radius: var(--radius-sm);
+    padding: 0.2rem 0.6rem;
+  }
+
+  .post-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid var(--text-border);
+  }
+
+  .back-link {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    transition: color 0.15s;
+  }
+
+  .back-link:hover { color: var(--teal); }
+</style>

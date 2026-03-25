@@ -1,0 +1,139 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Proyectos" lang="es">
+  <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+    <header class="page-header">
+      <h1>Proyectos</h1>
+      <p class="page-sub">Software open source construido con propósito. Todo bajo licencia MIT.</p>
+    </header>
+
+    <div class="projects-grid">
+
+      <article class="project-card">
+        <div class="project-header">
+          <h2 class="project-name">Tlahtolli</h2>
+          <span class="project-status status-dev">En desarrollo</span>
+        </div>
+        <p class="project-desc">
+          Editor de escritura creativa multiplataforma. Inspirado en Scrivener, construido con filosofía open source. Para escritores que quieren una herramienta seria sin pagar licencias.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">Go</span>
+          <span class="stack-tag">Wails</span>
+          <span class="stack-tag">Svelte</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/tlahtolli-app/tlahtolli" target="_blank" rel="noopener" class="project-link">
+            GitHub →
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-header">
+          <h2 class="project-name">Voluta</h2>
+          <span class="project-status status-dev">En desarrollo</span>
+        </div>
+        <p class="project-desc">
+          Librería Go para leer y convertir formatos de documentos de escritura creativa. El motor de conversión que usa Tlahtolli, disponible como módulo independiente.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">Go</span>
+          <span class="stack-tag">Library</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/calmecac-dev/voluta" target="_blank" rel="noopener" class="project-link">
+            GitHub →
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page-header { margin-bottom: 3rem; }
+  .page-sub { color: var(--text-muted); margin-top: 0.5rem; max-width: 48ch; }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--text-border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.15s;
+  }
+
+  .project-card:hover { border-color: var(--teal); }
+
+  .project-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .project-name {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+
+  .project-status {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+  }
+
+  .status-dev {
+    background: color-mix(in srgb, var(--terracota) 15%, transparent);
+    color: var(--terracota);
+  }
+
+  .status-stable {
+    background: color-mix(in srgb, var(--teal) 15%, transparent);
+    color: var(--teal);
+  }
+
+  .project-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .stack-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 0.5px solid var(--text-border);
+    color: var(--text-muted);
+  }
+
+  .project-links { margin-top: auto; }
+
+  .project-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--teal);
+  }
+</style>

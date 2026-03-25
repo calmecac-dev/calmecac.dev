@@ -1,0 +1,102 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  slug: string;
+  tags?: string[];
+  lang?: string;
+  readingTime?: number;
+}
+
+const { title, description, date, slug, tags = [], lang = 'es', readingTime } = Astro.props;
+
+const basePath = lang === 'en' ? '/en/blog' : '/blog';
+const formattedDate = date.toLocaleDateString(lang === 'en' ? 'en-US' : 'es-MX', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+---
+
+<article class="post-card">
+  <a href={`${basePath}/${slug}`} class="post-card-link" tabindex="-1" aria-hidden="true"></a>
+  <div class="post-card-meta">
+    <time datetime={date.toISOString()} class="post-date">{formattedDate}</time>
+    {readingTime && <span class="post-reading">{readingTime} min</span>}
+  </div>
+  <h2 class="post-title">
+    <a href={`${basePath}/${slug}`}>{title}</a>
+  </h2>
+  <p class="post-description">{description}</p>
+  {tags.length > 0 && (
+    <div class="post-tags">
+      {tags.map(tag => <span class="tag">{tag}</span>)}
+    </div>
+  )}
+</article>
+
+<style>
+  .post-card {
+    position: relative;
+    padding: 1.75rem 0;
+    border-bottom: 0.5px solid var(--text-border);
+  }
+
+  .post-card:first-child { border-top: 0.5px solid var(--text-border); }
+
+  .post-card-link {
+    position: absolute;
+    inset: 0;
+  }
+
+  .post-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-date, .post-reading {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .post-reading::before { content: '· '; }
+
+  .post-title {
+    font-size: 1.35rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-title a {
+    color: var(--text);
+    position: relative;
+    z-index: 1;
+    transition: color 0.15s;
+  }
+
+  .post-card:hover .post-title a { color: var(--teal); }
+
+  .post-description {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--teal);
+    background: color-mix(in srgb, var(--teal) 10%, transparent);
+    border-radius: var(--radius-sm);
+    padding: 0.2rem 0.6rem;
+  }
+</style>

@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400&display=swap');
+
+:root {
+  --teal:       #2a9d8f;
+  --teal-light: #3dbdae;
+  --teal-dim:   #1e7268;
+  --terracota:  #c27e67;
+  --crema:      #f4f1ec;
+  --obsidiana:  #2d2926;
+  --muted:      #5a5350;
+  --muted-light:#a89e99;
+  --border:     #d9d5ce;
+
+  --bg:         var(--crema);
+  --bg-card:    #ffffff;
+  --text:       var(--obsidiana);
+  --text-muted: var(--muted);
+  --text-border: var(--border);
+
+  --font-heading: 'Fraunces', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+
+  --max-w: 720px;
+  --max-w-wide: 1100px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         var(--obsidiana);
+    --bg-card:    #3a3330;
+    --text:       var(--crema);
+    --text-muted: var(--muted-light);
+    --text-border: #4a4542;
+  }
+}
+
+[data-theme="light"] {
+  --bg:         var(--crema);
+  --bg-card:    #ffffff;
+  --text:       var(--obsidiana);
+  --text-muted: var(--muted);
+  --text-border: var(--border);
+}
+
+[data-theme="dark"] {
+  --bg:         var(--obsidiana);
+  --bg-card:    #3a3330;
+  --text:       var(--crema);
+  --text-muted: var(--muted-light);
+  --text-border: #4a4542;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  transition: background 0.2s ease, color 0.2s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h3 { font-size: 1.25rem; }
+
+a {
+  color: var(--teal);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+a:hover { color: var(--teal-light); }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-card);
+  border: 0.5px solid var(--text-border);
+  border-radius: var(--radius-sm);
+  padding: 0.15em 0.4em;
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  background: var(--bg-card);
+  border: 0.5px solid var(--text-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.container--wide {
+  max-width: var(--max-w-wide);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+/* Prose styles for blog posts */
+.prose h2 { margin: 2.5rem 0 1rem; }
+.prose h3 { margin: 2rem 0 0.75rem; }
+.prose p  { margin-bottom: 1.25rem; }
+.prose ul, .prose ol { margin: 1rem 0 1.25rem 1.5rem; }
+.prose li { margin-bottom: 0.4rem; }
+.prose blockquote {
+  border-left: 3px solid var(--teal);
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+.prose th, .prose td {
+  padding: 0.6rem 1rem;
+  border: 0.5px solid var(--text-border);
+  text-align: left;
+}
+.prose th {
+  background: var(--bg-card);
+  font-weight: 500;
+}
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose hr {
+  border: none;
+  border-top: 0.5px solid var(--text-border);
+  margin: 2.5rem 0;
+}
