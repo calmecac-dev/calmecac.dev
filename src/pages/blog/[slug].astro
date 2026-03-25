@@ -21,8 +21,9 @@ const formattedDate = post.data.date.toLocaleDateString('es-MX', {
 ---
 
 <Base title={post.data.title} description={post.data.description} lang="es">
-  <article class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
-    <header class="post-header">
+  <article class="container container--wide" style="padding-top: 3rem; padding-bottom: 5rem;">
+    <a href="/blog" class="back-link">← Volver al blog</a>
+    <header class="post-header" style="margin-top:1rem;">
       <div class="post-meta">
         <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
         {post.data.readingTime && <span>· {post.data.readingTime} min de lectura</span>}
