@@ -21,7 +21,7 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', {
 ---
 
 <Base title={post.data.title} description={post.data.description} lang="en">
-  <article class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+  <article class="container container--wide" style="padding-top: 3rem; padding-bottom: 5rem;">
     <header class="post-header">
       <div class="post-meta">
         <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
