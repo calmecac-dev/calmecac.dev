@@ -28,7 +28,7 @@ The problem—and this explains a lot—is that it was designed for the Linux ke
 
 ## How Git Works Internally (For Humans)
 
-Before we talk about the problem, it helps to understand—at a very high level—how Git stores history. I promise it won’t hurt… much.
+Before we talk about the problem, it helps to understand—at least a little bit—how Git stores history. I promise it won’t hurt… much.
 
 ### Commits, Branches, and the Graph
 
