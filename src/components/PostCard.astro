@@ -12,6 +12,7 @@ interface Props {
 const { title, description, date, slug, tags = [], lang = 'es', readingTime } = Astro.props;
 
 const basePath = lang === 'en' ? '/en/blog' : '/blog';
+date.setUTCHours(6);
 const formattedDate = date.toLocaleDateString(lang === 'en' ? 'en-US' : 'es-MX', {
   year: 'numeric', month: 'long', day: 'numeric'
 });

@@ -1,7 +1,7 @@
 ---
 title: "Git y el precio de la fidelidad"
 description: "Por qué tu historial nunca es tan limpio como quisieras, qué lo causa, y cómo podría no ser así."
-date: 2026-03-25 15:00:00.00
+date: 2026-03-25
 tags: ["git", "desarrollo", "open source"]
 readingTime: 12
 ---
