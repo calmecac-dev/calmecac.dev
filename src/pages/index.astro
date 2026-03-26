@@ -1,132 +1,693 @@
 ---
-import Base from '../layouts/Base.astro';
-import PostCard from '../components/PostCard.astro';
-import { getCollection } from 'astro:content';
+import Base from "../layouts/Base.astro";
+import PostCard from "../components/PostCard.astro";
+import { getCollection } from "astro:content";
 
-const posts = (await getCollection('blog'))
-  .filter(p => !p.id.startsWith('en/'))
+const posts = (await getCollection("blog"))
+  .filter((p) => !p.id.startsWith("en/"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 ---
 
 <Base title="Inicio" lang="es">
+  <!-- HERO -->
   <section class="hero">
-    <div class="container">
+    <div class="hero-pattern" aria-hidden="true"></div>
+    <div class="container container--wide hero-inner">
       <p class="hero-eyebrow">Software con raíces</p>
-      <h1 class="hero-title">Herramientas open source construidas con propósito</h1>
+      <h1 class="hero-title">
+        Herramientas open source<br />construidas con propósito
+      </h1>
       <p class="hero-sub">
-        Calmécac es un sello de software independiente. Hacemos herramientas para escritores y desarrolladores, sin ánimo de lucro y sin perder el carácter.
+        Calmécac es un sello de software independiente. Hacemos software porque
+        lo necesitamos — y lo publicamos libre porque así debe ser.
       </p>
       <div class="hero-actions">
         <a href="/projects" class="btn btn-primary">Ver proyectos</a>
-        <a href="/blog" class="btn btn-outline">Leer el blog</a>
+        <a
+          href="https://github.com/calmecac-dev"
+          target="_blank"
+          rel="noopener"
+          class="btn btn-outline">GitHub →</a
+        >
       </div>
     </div>
   </section>
 
-  <section class="recent-posts">
-    <div class="container">
-      <h2 class="section-title">Últimas entradas</h2>
-      {posts.map(post => (
-        <PostCard
-          title={post.data.title}
-          description={post.data.description}
-          date={post.data.date}
-          slug={post.id.replace(".md", "")}
-          tags={post.data.tags}
-          readingTime={post.data.readingTime}
-          lang="es"
-        />
-      ))}
-      <a href="/blog" class="all-posts-link">Ver todas las entradas →</a>
+  <!-- QUIÉNES SOMOS -->
+  <section class="about-section">
+    <div class="container container--wide">
+      <div class="about-header">
+        <p class="about-eyebrow">¿Quiénes somos?</p>
+        <h2 class="about-title">
+          Un sello de software independiente, construido desde adentro hacia
+          afuera
+        </h2>
+        <p class="about-intro">
+          Calmécac nació de una frustración simple: las herramientas que
+          necesitábamos no existían, costaban demasiado, o venían con
+          compromisos que no queríamos aceptar. Así que las construimos. Y
+          porque creemos que el software debe ser libre, las publicamos para que
+          cualquiera pueda usarlas, modificarlas y mejorarlas.
+        </p>
+      </div>
+      <div class="about-grid">
+        <div class="about-item">
+          <div class="about-icon">⌘</div>
+          <h3>Open source</h3>
+          <p>
+            Todo lo que construimos es público, auditado y libre. Sin licencias
+            de pago, sin vendor lock-in. El código es tuyo para leerlo,
+            modificarlo y distribuirlo.
+          </p>
+        </div>
+        <div class="about-item">
+          <div class="about-icon">◈</div>
+          <h3>Con propósito</h3>
+          <p>
+            No hacemos herramientas por hacerlas. Cada proyecto resuelve un
+            problema real que nosotros mismos tenemos — si no lo usaríamos, no
+            lo construimos.
+          </p>
+        </div>
+        <div class="about-item">
+          <div class="about-icon">✦</div>
+          <h3>Cultura propia</h3>
+          <p>
+            Nombres en náhuatl, filosofía de permanencia. Construimos para
+            durar, no para el sprint de esta semana. El software que hacemos
+            tiene que sobrevivir el tiempo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYECTOS -->
+  <section class="projects-section">
+    <div class="container container--wide">
+      <div class="section-header">
+        <h2>Proyectos</h2>
+        <a href="/projects" class="section-link">Ver todos →</a>
+      </div>
+      <div class="projects-grid">
+        <article class="project-card featured">
+          <div class="project-card-header">
+            <span class="project-tag">Editor</span>
+            <span class="project-status">En desarrollo</span>
+          </div>
+          <h3>Tlahtolli</h3>
+          <p>
+            Editor de escritura creativa multiplataforma. Inspirado en
+            Scrivener, construido con filosofía open source. Para escritores que
+            quieren una herramienta seria sin pagar licencias.
+          </p>
+          <div class="project-stack">
+            <span>C#</span><span>Avalonia UI</span><span>SQLite</span>
+          </div>
+          <a
+            href="https://github.com/tlahtolli-app/tlahtolli"
+            target="_blank"
+            rel="noopener"
+            class="project-link">GitHub →</a
+          >
+        </article>
+        <article class="project-card">
+          <div class="project-card-header">
+            <span class="project-tag">Librería</span>
+            <span class="project-status">En desarrollo</span>
+          </div>
+          <h3>Cuicatl</h3>
+          <p>
+            Librería de conversión de documentos de escritura creativa. Dos
+            implementaciones: Go (open source, v0.1.0-alpha) y .NET (núcleo de
+            Tlahtolli). Lee Scrivener, RTF y Markdown; escribe Markdown, HTML,
+            ePub, PDF y docx.
+          </p>
+          <div class="project-stack">
+            <span>Go</span><span>C#</span><span>Library</span>
+          </div>
+          <a
+            href="https://github.com/calmecac-dev/cuicatl"
+            target="_blank"
+            rel="noopener"
+            class="project-link">GitHub →</a
+          >
+        </article>
+        <article class="project-card">
+          <div class="project-card-header">
+            <span class="project-tag">Desktop</span>
+            <span class="project-status">En desarrollo</span>
+          </div>
+          <h3>Amatl</h3>
+          <p>
+            Gestor de activos de TI para PyMEs. Inventario, asignaciones,
+            garantías, mantenimientos y consumibles — offline, sin servidores ni
+            suscripciones.
+          </p>
+          <div class="project-stack">
+            <span>Go</span><span>Wails</span><span>Svelte</span><span
+              >SQLite</span
+            >
+          </div>
+          <a
+            href="https://github.com/calmecac-dev/amatl"
+            target="_blank"
+            rel="noopener"
+            class="project-link">GitHub →</a
+          >
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNDING / SERVICIOS -->
+  <section class="funding-section">
+    <div class="container container--wide funding-inner">
+      <div class="funding-text">
+        <p class="funding-eyebrow">¿Quieres apoyar el proyecto?</p>
+        <h2>Calmécac necesita funding</h2>
+        <p>
+          Todo lo que construimos es gratuito y open source. Si tu empresa
+          necesita software a la medida, podemos desarrollarlo — y parte de lo
+          que nos pagas financia los proyectos libres. También aceptamos
+          donaciones si solo quieres apoyar.
+        </p>
+        <div class="funding-actions">
+          <a href="/contact" class="btn btn-primary">Hablemos de tu proyecto</a>
+          <a
+            href="https://github.com/sponsors/calmecac-dev"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-outline">Donar en GitHub →</a
+          >
+        </div>
+      </div>
+      <div class="funding-visual" aria-hidden="true">
+        <div class="funding-badge">
+          <span class="badge-icon">♦</span>
+          <span class="badge-text">Software a la medida</span>
+        </div>
+        <div class="funding-badge">
+          <span class="badge-icon">❤</span>
+          <span class="badge-text">Donaciones bienvenidas</span>
+        </div>
+        <div class="funding-badge">
+          <span class="badge-icon">⌥</span>
+          <span class="badge-text">100% open source</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="stack-section">
+    <div class="stack-header container container--wide">
+      <p class="stack-sub">Las herramientas con las que construimos.</p>
+    </div>
+    <div class="carousel-wrapper">
+      <div class="carousel-slide active" data-slide="0">
+        <div class="carousel-item">
+          <i class="devicon-go-original-wordmark"></i><span>Go</span>
+        </div>
+        <div class="carousel-item">
+          <i class="devicon-csharp-plain"></i><span>C#</span>
+        </div>
+        <div class="carousel-item">
+          <i class="devicon-dotnetcore-plain"></i><span>.NET</span>
+        </div>
+        <div class="carousel-item">
+          <i class="devicon-svelte-plain"></i><span>Svelte</span>
+        </div>
+        <div class="carousel-item">
+          <i class="devicon-sqlite-plain"></i><span>SQLite</span>
+        </div>
+        <div class="carousel-item">
+          <i class="devicon-astro-plain"></i><span>Astro</span>
+        </div>
+      </div>
+      <div class="carousel-slide" data-slide="1">
+        <div class="carousel-item">
+          <i class="devicon-cloudflare-plain"></i><span>Cloudflare</span>
+        </div>
+        <div class="carousel-item">
+          <i class="devicon-github-original"></i><span>GitHub</span>
+        </div>
+        <div class="carousel-item">
+          <i class="devicon-git-plain"></i><span>Git</span>
+        </div>
+        <div class="carousel-item">
+          <i class="devicon-python-plain"></i><span>Python</span>
+        </div>
+        <div class="carousel-item">
+          <i class="devicon-fedora-plain"></i><span>Fedora</span>
+        </div>
+      </div>
     </div>
   </section>
 </Base>
 
+<script>
+  const slides = document.querySelectorAll(".carousel-slide");
+  let current = 0;
+  setInterval(() => {
+    slides[current].classList.remove("active");
+    slides[current].classList.add("leaving");
+    setTimeout(() => slides[current].classList.remove("leaving"), 600);
+    current = (current + 1) % slides.length;
+    slides[current].classList.add("active");
+  }, 3000);
+</script>
+
 <style>
   .hero {
-    padding: 5rem 0 4rem;
+    position: relative;
+    text-align: center;
+    padding: 7rem 0 5rem;
+    overflow: hidden;
+  }
+
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: url("/pattern.svg");
+    background-repeat: repeat;
+    background-size: 160px auto;
+    opacity: 0.04;
+    pointer-events: none;
+    filter: grayscale(1);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero-eyebrow {
     font-size: 0.8rem;
     font-weight: 500;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--teal);
-    margin-bottom: 1rem;
-  }
-
-  .hero-title {
-    max-width: 18ch;
     margin-bottom: 1.25rem;
   }
 
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    max-width: 26ch;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+  }
+
   .hero-sub {
-    max-width: 52ch;
+    max-width: 60ch;
     color: var(--text-muted);
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     line-height: 1.7;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
   }
 
   .hero-actions {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .btn {
     display: inline-flex;
     align-items: center;
-    padding: 0.6rem 1.25rem;
+    padding: 0.65rem 1.4rem;
     border-radius: var(--radius-md);
     font-size: 0.9rem;
     font-weight: 500;
     transition: all 0.15s;
   }
-
   .btn-primary {
     background: var(--teal);
     color: var(--crema);
     border: 1.5px solid var(--teal);
   }
-
   .btn-primary:hover {
     background: var(--teal-dim);
     border-color: var(--teal-dim);
     color: var(--crema);
   }
-
   .btn-outline {
     background: transparent;
     color: var(--text);
     border: 1.5px solid var(--text-border);
   }
-
   .btn-outline:hover {
     border-color: var(--teal);
     color: var(--teal);
   }
 
-  .recent-posts {
-    padding-bottom: 4rem;
+  .about-section {
+    padding: 5rem 0;
+    background: var(--bg-card);
+    border-top: 0.5px solid var(--text-border);
+    border-bottom: 0.5px solid var(--text-border);
   }
 
-  .section-title {
-    font-size: 1.1rem;
+  .about-header {
+    max-width: 720px;
+    margin-bottom: 3.5rem;
+  }
+
+  .about-eyebrow {
+    font-size: 0.8rem;
     font-weight: 500;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-    font-family: var(--font-body);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.75rem;
   }
 
-  .all-posts-link {
-    display: inline-block;
-    margin-top: 1.5rem;
+  .about-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .about-intro {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+  }
+
+  .about-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.75rem;
+    background: var(--bg);
+    border: 0.5px solid var(--text-border);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.15s;
+  }
+
+  .about-item:hover {
+    border-color: var(--teal);
+  }
+
+  .about-icon {
+    font-size: 1.5rem;
+    color: var(--teal);
+  }
+
+  .about-item h3 {
+    font-size: 1.05rem;
+    margin: 0;
+  }
+  .about-item p {
     font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+  .section-link {
+    font-size: 0.875rem;
     font-weight: 500;
     color: var(--teal);
+  }
+
+  .projects-section {
+    padding: 4rem 0;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .project-card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--text-border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: border-color 0.15s;
+  }
+
+  .project-card:hover {
+    border-color: var(--teal);
+  }
+  .project-card.featured {
+    border-color: color-mix(in srgb, var(--teal) 40%, transparent);
+  }
+
+  .project-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .project-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--teal);
+    background: color-mix(in srgb, var(--teal) 12%, transparent);
+    border-radius: var(--radius-sm);
+    padding: 0.2rem 0.6rem;
+  }
+
+  .project-status {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--terracota);
+    background: color-mix(in srgb, var(--terracota) 12%, transparent);
+    border-radius: var(--radius-sm);
+    padding: 0.2rem 0.6rem;
+  }
+
+  .project-card h3 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+  .project-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .project-stack span {
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 0.5px solid var(--text-border);
+    color: var(--text-muted);
+  }
+
+  .project-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--teal);
+    margin-top: auto;
+  }
+
+  .stack-section {
+    padding: 4rem 0;
+    border-top: 0.5px solid var(--text-border);
+    border-bottom: 0.5px solid var(--text-border);
+  }
+
+  .stack-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .stack-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
+  }
+  .stack-sub {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    width: 100%;
+    height: 110px;
+    overflow: hidden;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+  }
+
+  .carousel-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+    pointer-events: none;
+  }
+
+  .carousel-slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .carousel-slide.leaving {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  .carousel-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(194, 126, 103, 0.5);
+    transition: color 0.2s;
+  }
+
+  .carousel-item:hover {
+    color: rgba(194, 126, 103, 0.9);
+  }
+
+  .carousel-item i {
+    font-size: 2.5rem;
+  }
+
+  .carousel-item span {
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--text-muted);
+  }
+
+  .blog-section {
+    padding: 4rem 0;
+  }
+
+  .funding-section {
+    background: var(--bg-card);
+    border-top: 0.5px solid var(--text-border);
+    border-bottom: 0.5px solid var(--text-border);
+    padding: 5rem 0;
+  }
+
+  .funding-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .funding-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terracota);
+    margin-bottom: 0.75rem;
+  }
+
+  .funding-text h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+  .funding-text p {
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+    max-width: 52ch;
+  }
+  .funding-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .funding-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .funding-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--bg);
+    border: 0.5px solid var(--text-border);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.25rem;
+    white-space: nowrap;
+  }
+
+  .badge-icon {
+    color: var(--teal);
+    font-size: 1rem;
+  }
+  .badge-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  @media (max-width: 768px) {
+    .funding-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .funding-visual {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
   }
 </style>

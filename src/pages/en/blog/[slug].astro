@@ -14,14 +14,17 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const date = new Date(post.data.date);
+date.setUTCHours(6); // compensar UTC-6
 
-const formattedDate = post.data.date.toLocaleDateString('en-US', {
-  year: 'numeric', month: 'long', day: 'numeric'
+const formattedDate = date.toLocaleDateString('es-MX', {
+  year: 'numeric', month: 'long', day: 'numeric',
+  timeZone: 'America/Mexico_City'
 });
 ---
 
 <Base title={post.data.title} description={post.data.description} lang="en">
-  <article class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+  <article class="container container--wide" style="padding-top: 3rem; padding-bottom: 5rem;">
     <header class="post-header">
       <div class="post-meta">
         <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
